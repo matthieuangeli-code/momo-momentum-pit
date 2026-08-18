@@ -1,0 +1,132 @@
+ticker,name,region,sector
+EQNR.OL,Equinor,Norway,Energy
+DNB.OL,DNB Bank,Norway,Financials
+TEL.OL,Telenor,Norway,Communication
+NHY.OL,Norsk Hydro,Norway,Materials
+ORK.OL,Orkla,Norway,Consumer Staples
+YAR.OL,Yara,Norway,Materials
+MOWI.OL,Mowi,Norway,Consumer Staples
+KOG.OL,Kongsberg Gruppen,Norway,Industrials
+AKRBP.OL,Aker BP,Norway,Energy
+GJF.OL,Gjensidige,Norway,Financials
+STB.OL,Storebrand,Norway,Financials
+TOM.OL,Tomra,Norway,Industrials
+SALM.OL,SalMar,Norway,Consumer Staples
+AUTO.OL,AutoStore,Norway,Industrials
+SUBC.OL,Subsea 7,Norway,Energy
+BAKKA.OL,Bakkafrost,Norway,Consumer Staples
+ELK.OL,Elkem,Norway,Materials
+SCATC.OL,Scatec,Norway,Utilities
+NOD.OL,Nordic Semiconductor,Norway,Technology
+VAR.OL,Vår Energi,Norway,Energy
+VOLV-B.ST,Volvo,Sweden,Industrials
+ERIC-B.ST,Ericsson,Sweden,Technology
+ATCO-A.ST,Atlas Copco,Sweden,Industrials
+ASSA-B.ST,Assa Abloy,Sweden,Industrials
+SEB-A.ST,SEB,Sweden,Financials
+SWED-A.ST,Swedbank,Sweden,Financials
+SHB-A.ST,Handelsbanken,Sweden,Financials
+INVE-B.ST,Investor AB,Sweden,Financials
+SAND.ST,Sandvik,Sweden,Industrials
+SKF-B.ST,SKF,Sweden,Industrials
+ALFA.ST,Alfa Laval,Sweden,Industrials
+EVO.ST,Evolution,Sweden,Consumer Discretionary
+HM-B.ST,H&M,Sweden,Consumer Discretionary
+TELIA.ST,Telia,Sweden,Communication
+ESSITY-B.ST,Essity,Sweden,Consumer Staples
+HEXAB.ST,Hexagon,Sweden,Technology
+SAAB-B.ST,Saab,Sweden,Industrials
+NDA-SE.ST,Nordea,Sweden,Financials
+AZN.ST,AstraZeneca Sweden,Sweden,Health Care
+NOVO-B.CO,Novo Nordisk,Denmark,Health Care
+MAERSK-B.CO,A.P. Moller Maersk,Denmark,Industrials
+DSV.CO,DSV,Denmark,Industrials
+VWS.CO,Vestas,Denmark,Industrials
+ORSTED.CO,Orsted,Denmark,Utilities
+CARL-B.CO,Carlsberg,Denmark,Consumer Staples
+COLO-B.CO,Coloplast,Denmark,Health Care
+DANSKE.CO,Danske Bank,Denmark,Financials
+PNDORA.CO,Pandora,Denmark,Consumer Discretionary
+GMAB.CO,Genmab,Denmark,Health Care
+SAMPO.HE,Sampo,Finland,Financials
+NOKIA.HE,Nokia,Finland,Technology
+KNEBV.HE,Kone,Finland,Industrials
+FORTUM.HE,Fortum,Finland,Utilities
+UPM.HE,UPM-Kymmene,Finland,Materials
+NESTE.HE,Neste,Finland,Energy
+WRT1V.HE,Wartsila,Finland,Industrials
+METSO.HE,Metso,Finland,Industrials
+AIR.PA,Airbus,France,Industrials
+MC.PA,LVMH,France,Consumer Discretionary
+OR.PA,L'Oreal,France,Consumer Staples
+SAN.PA,Sanofi,France,Health Care
+SU.PA,Schneider Electric,France,Industrials
+TTE.PA,TotalEnergies,France,Energy
+BNP.PA,BNP Paribas,France,Financials
+AI.PA,Air Liquide,France,Materials
+SAF.PA,Safran,France,Industrials
+DG.PA,Vinci,France,Industrials
+CS.PA,AXA,France,Financials
+KER.PA,Kering,France,Consumer Discretionary
+RI.PA,Pernod Ricard,France,Consumer Staples
+HO.PA,Thales,France,Industrials
+RMS.PA,Hermes,France,Consumer Discretionary
+CAP.PA,Capgemini,France,Technology
+ORA.PA,Orange,France,Communication
+ENGI.PA,Engie,France,Utilities
+STLAP.PA,Stellantis,France,Consumer Discretionary
+BN.PA,Danone,France,Consumer Staples
+EL.PA,EssilorLuxottica,France,Health Care
+SAP.DE,SAP,Germany,Technology
+SIE.DE,Siemens,Germany,Industrials
+ALV.DE,Allianz,Germany,Financials
+DTE.DE,Deutsche Telekom,Germany,Communication
+MBG.DE,Mercedes-Benz,Germany,Consumer Discretionary
+BMW.DE,BMW,Germany,Consumer Discretionary
+BAS.DE,BASF,Germany,Materials
+BAYN.DE,Bayer,Germany,Health Care
+MUV2.DE,Munich Re,Germany,Financials
+DB1.DE,Deutsche Boerse,Germany,Financials
+IFX.DE,Infineon,Germany,Technology
+RHM.DE,Rheinmetall,Germany,Industrials
+ADS.DE,Adidas,Germany,Consumer Discretionary
+HEN3.DE,Henkel,Germany,Consumer Staples
+BEI.DE,Beiersdorf,Germany,Consumer Staples
+DHL.DE,DHL Group,Germany,Industrials
+VOW3.DE,Volkswagen,Germany,Consumer Discretionary
+ASML.AS,ASML,Netherlands,Technology
+UNA.AS,Unilever,Netherlands,Consumer Staples
+INGA.AS,ING,Netherlands,Financials
+PHIA.AS,Philips,Netherlands,Health Care
+ADYEN.AS,Adyen,Netherlands,Financials
+WKL.AS,Wolters Kluwer,Netherlands,Industrials
+HEIA.AS,Heineken,Netherlands,Consumer Staples
+ASM.AS,ASM International,Netherlands,Technology
+PRX.AS,Prosus,Netherlands,Consumer Discretionary
+SHELL.AS,Shell,Netherlands,Energy
+NESN.SW,Nestle,Switzerland,Consumer Staples
+NOVN.SW,Novartis,Switzerland,Health Care
+ROG.SW,Roche,Switzerland,Health Care
+UBSG.SW,UBS,Switzerland,Financials
+ZURN.SW,Zurich Insurance,Switzerland,Financials
+ABBN.SW,ABB,Switzerland,Industrials
+CFR.SW,Richemont,Switzerland,Consumer Discretionary
+SIKA.SW,Sika,Switzerland,Materials
+LONN.SW,Lonza,Switzerland,Health Care
+GIVN.SW,Givaudan,Switzerland,Materials
+IBE.MC,Iberdrola,Spain,Utilities
+SAN.MC,Santander,Spain,Financials
+BBVA.MC,BBVA,Spain,Financials
+ITX.MC,Inditex,Spain,Consumer Discretionary
+TEF.MC,Telefonica,Spain,Communication
+REP.MC,Repsol,Spain,Energy
+FER.MC,Ferrovial,Spain,Industrials
+ENEL.MI,Enel,Italy,Utilities
+ENI.MI,Eni,Italy,Energy
+ISP.MI,Intesa Sanpaolo,Italy,Financials
+UCG.MI,UniCredit,Italy,Financials
+G.MI,Generali,Italy,Financials
+STLAM.MI,Stellantis Milan,Italy,Consumer Discretionary
+LDO.MI,Leonardo,Italy,Industrials
+RACE.MI,Ferrari,Italy,Consumer Discretionary
+PRY.MI,Prysmian,Italy,Industrials
