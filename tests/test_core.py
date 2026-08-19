@@ -39,6 +39,19 @@ class MomentumCoreTests(unittest.TestCase):
         self.assertLessEqual(len(picks), 2)
         self.assertTrue(set(picks.index).issubset(set(prices.columns)))
 
+    def test_scanner_normalizes_yfinance_ticker_index_name(self):
+        prices = self.synthetic_prices()
+        prices.columns.name = "Ticker"
+        cfg = StrategyConfig(lookback_months=6, sma_days=100, top_n=2, max_per_sector=1)
+        signals = latest_signals(prices, cfg)
+        self.assertEqual(signals.index.name, "ticker")
+        top = signals.head(30).copy().reset_index().rename(columns={"index": "ticker"})
+        self.assertIn("ticker", top.columns)
+        sectors = {t: t for t in prices.columns}
+        top["sector"] = top["ticker"].map(sectors).fillna("Unknown")
+        display = top[["ticker", "sector", "momentum_12_1", "above_sma", "price", "sma200"]]
+        self.assertFalse(display.empty)
+
     def test_backtest_and_membership(self):
         prices = self.synthetic_prices()
         benchmark = prices.mean(axis=1)

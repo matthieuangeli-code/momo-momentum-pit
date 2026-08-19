@@ -109,6 +109,9 @@ def latest_signals(prices: pd.DataFrame, cfg: StrategyConfig) -> pd.DataFrame:
     out["above_sma"] = out["price"] > out["sma200"]
     out["rank"] = out["momentum_12_1"].rank(ascending=False, method="min")
     out = out.replace([np.inf, -np.inf], np.nan).dropna(subset=["momentum_12_1", "sma200"])
+    # yfinance often leaves the columns index named "Ticker". Normalize the
+    # signal index name so Streamlit reset_index() always creates `ticker`.
+    out.index.name = "ticker"
     return out.sort_values("momentum_12_1", ascending=False)
 
 
