@@ -69,6 +69,7 @@ def prepare_pit_inputs(
     requested_start: date,
     requested_end: date,
     benchmark_ticker: str | None = None,
+    sector_lookup: dict[str, str] | None = None,
 ):
     """Prepare point-in-time prices, membership and benchmark for a run."""
     effective_start = max(pd.Timestamp(requested_start), PIT_START)
@@ -95,7 +96,8 @@ def prepare_pit_inputs(
     prices = merge_pit_with_yahoo(pit.prices, yahoo)
     prices = prices.loc[pd.Timestamp(start_download):pd.Timestamp(end_download)].copy()
 
-    sectors = {t: sector_map.get(t, "Unknown") for t in pit.tickers}
+    sector_lookup = sector_lookup or {}
+    sectors = {t: sector_lookup.get(t, "Unknown") for t in pit.tickers}
 
     bench = None
     bench_name = "EURO STOXX 50 (price index)"
@@ -247,7 +249,7 @@ with bt_tab:
             if use_pit_bt:
                 with st.spinner("Préparation de l’univers historique + complément Yahoo pour le lookback..."):
                     prices, bt_sectors, bt_membership, bench, bench_name, eff_start, eff_end = prepare_pit_inputs(
-                        bt_start, bt_end, benchmark_ticker
+                        bt_start, bt_end, benchmark_ticker, sector_map
                     )
                 if pd.Timestamp(bt_start) < eff_start or pd.Timestamp(bt_end) > eff_end:
                     st.warning(f"Période ajustée à la couverture PIT : {eff_start.date()} → {eff_end.date()}.")
@@ -412,7 +414,7 @@ with research_tab:
             if use_pit_research:
                 with st.spinner("Préparation de l’univers historique + complément Yahoo pour les lookbacks..."):
                     research_prices, research_sectors, research_membership, research_bench, benchmark_name, eff_start, eff_end = prepare_pit_inputs(
-                        research_start, research_end, research_benchmark
+                        research_start, research_end, research_benchmark, sector_map
                     )
                 if pd.Timestamp(research_start) < eff_start or pd.Timestamp(research_end) > eff_end:
                     st.warning(f"Période de recherche ajustée à la couverture PIT : {eff_start.date()} → {eff_end.date()}.")
