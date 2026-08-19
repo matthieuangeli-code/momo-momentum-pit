@@ -1,0 +1,87 @@
+name: Live smoke + apply scanner fix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/live-smoke-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  test-and-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply tested scanner fix and regression test
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('strategy.py')
+          s = p.read_text()
+          old = '''    out["rank"] = out["momentum_12_1"].rank(ascending=False, method="min")\n    out = out.replace([np.inf, -np.inf], np.nan).dropna(subset=["momentum_12_1", "sma200"])\n    return out.sort_values("momentum_12_1", ascending=False)\n'''
+          new = '''    out["rank"] = out["momentum_12_1"].rank(ascending=False, method="min")\n    out = out.replace([np.inf, -np.inf], np.nan).dropna(subset=["momentum_12_1", "sma200"])\n    # yfinance often leaves the columns index named "Ticker". Normalize the\n    # signal index name so Streamlit reset_index() always creates `ticker`.\n    out.index.name = "ticker"\n    return out.sort_values("momentum_12_1", ascending=False)\n'''
+          if old not in s and 'out.index.name = "ticker"' not in s:
+              raise SystemExit('strategy.py target block not found')
+          if old in s:
+              p.write_text(s.replace(old, new))
+
+          p = Path('tests/test_core.py')
+          s = p.read_text()
+          marker = '    def test_backtest_and_membership(self):\n'
+          test = '''    def test_scanner_normalizes_yfinance_ticker_index_name(self):\n        prices = self.synthetic_prices()\n        prices.columns.name = "Ticker"\n        cfg = StrategyConfig(lookback_months=6, sma_days=100, top_n=2, max_per_sector=1)\n        signals = latest_signals(prices, cfg)\n        self.assertEqual(signals.index.name, "ticker")\n        top = signals.head(30).copy().reset_index().rename(columns={"index": "ticker"})\n        self.assertIn("ticker", top.columns)\n        sectors = {t: t for t in prices.columns}\n        top["sector"] = top["ticker"].map(sectors).fillna("Unknown")\n        display = top[["ticker", "sector", "momentum_12_1", "above_sma", "price", "sma200"]]\n        self.assertFalse(display.empty)\n\n'''
+          if 'test_scanner_normalizes_yfinance_ticker_index_name' not in s:
+              if marker not in s:
+                  raise SystemExit('test insertion marker not found')
+              p.write_text(s.replace(marker, test + marker))
+          PY
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && pip install -r requirements.txt
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Live Yahoo scanner smoke test
+        run: |
+          python - <<'PY'
+          from datetime import date, timedelta
+          from strategy import StrategyConfig, download_prices, latest_signals
+          tickers = ['AIR.PA', 'SAP.DE', 'ASML.AS', 'MC.PA']
+          prices = download_prices(tickers, start=(date.today()-timedelta(days=520)).isoformat())
+          assert len(prices.columns) >= 2, prices.columns
+          cfg = StrategyConfig()
+          signals = latest_signals(prices, cfg)
+          assert signals.index.name == 'ticker', signals.index.name
+          top = signals.head(30).copy().reset_index().rename(columns={'index':'ticker'})
+          required = {'ticker','momentum_12_1','above_sma','price','sma200'}
+          assert required.issubset(top.columns), top.columns
+          print('LIVE_YAHOO_SCANNER_OK', list(prices.columns))
+          PY
+      - name: Real PIT download/load smoke test
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from pit_data import ensure_eurostoxx50_pit, load_eurostoxx50_pit, PIT_EXPECTED_SECURITIES
+          root = Path('.')
+          ensure_eurostoxx50_pit(root)
+          pit = load_eurostoxx50_pit(root)
+          assert len(pit.tickers) >= PIT_EXPECTED_SECURITIES, len(pit.tickers)
+          assert not pit.prices.empty
+          assert not pit.index_prices.empty
+          print('REAL_PIT_OK', len(pit.tickers), pit.prices.shape)
+          PY
+      - name: Commit fix after all tests pass
+        run: |
+          if git diff --quiet -- strategy.py tests/test_core.py; then
+            echo 'No code changes needed'
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add strategy.py tests/test_core.py
+            git commit -m 'Fix Yahoo Ticker index KeyError with regression test'
+            git push
+          fi
