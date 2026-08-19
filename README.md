@@ -27,17 +27,30 @@ streamlit run app.py
 
 Ou double-clique sur `run_windows.bat` si Python est déjà installé.
 
-## Accès depuis n'importe où
+## Accès depuis n'importe où — Streamlit Community Cloud
 
-Le projet est prêt pour Streamlit Community Cloud : `app.py` est le point
-d'entrée, `requirements.txt` contient les versions testées et la configuration
-publique se trouve dans `.streamlit/config.toml`. Après publication dans un dépôt
-GitHub, crée une application sur `https://share.streamlit.io`, sélectionne ce dépôt,
-la branche `main` et le fichier `app.py`.
+Le dépôt est prêt pour Streamlit Community Cloud :
 
-Au premier backtest PIT d'une nouvelle instance, l'application télécharge les 66
-historiques depuis le commit source figé. Le cache local n'est volontairement pas
-versionné ; cela évite de republier un jeu de données tiers sans licence explicite.
+- point d'entrée : `app.py` ;
+- branche : `main` ;
+- dépendances : `requirements.txt` ;
+- configuration : `.streamlit/config.toml` ;
+- version Python recommandée au déploiement : **3.12**.
+
+Déploiement :
+
+1. ouvre `https://share.streamlit.io` et connecte ton compte GitHub ;
+2. autorise Streamlit Community Cloud à accéder au dépôt privé `matthieuangeli-code/momo-momentum-pit` ;
+3. clique sur **Create app** puis **Yup, I have an app** ;
+4. sélectionne le dépôt `matthieuangeli-code/momo-momentum-pit` ;
+5. branche `main` ;
+6. fichier `app.py` ;
+7. dans **Advanced settings**, choisis Python **3.12** ;
+8. clique sur **Deploy**.
+
+L'application reçoit alors une URL stable en `*.streamlit.app`, accessible depuis un téléphone ou n'importe quel ordinateur. Comme le dépôt GitHub est privé, l'application peut rester privée dans les réglages de partage Streamlit. Les futurs changements poussés sur GitHub sont détectés automatiquement par Community Cloud et redéployés.
+
+Au premier backtest PIT d'une nouvelle instance, l'application télécharge les 66 historiques depuis le commit source figé. Le cache local n'est volontairement pas versionné ; cela évite de republier un jeu de données tiers sans licence explicite. Sur Community Cloud, ce cache peut être reconstruit après un redémarrage de l'instance.
 
 ## Historique point-in-time EURO STOXX 50
 
